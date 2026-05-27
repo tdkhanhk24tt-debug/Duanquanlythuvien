@@ -1,82 +1,176 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom"; // 🔥 thêm
-import { Link } from "react-router-dom";
-import logo2 from "../assets/logo2.jpg";
+import { useNavigate, Link } from "react-router-dom";
 import "../App.css";
 
 export default function Register() {
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState(""); // 🔥 báo lỗi
 
   const navigate = useNavigate();
 
-  const handleRegister = () => {
-    if (!username || !email || !password) {
-      setError("Vui lòng nhập đầy đủ thông tin!");
+  const [formData, setFormData] = useState({
+    hoTen: "",
+    tenDangNhap: "",
+    email: "",
+    soDienThoai: "",
+    matKhau: "",
+    nhapLaiMatKhau: "",
+  });
+
+  const handleChange = (e) => {
+
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+
+  };
+
+  const handleRegister = async (e) => {
+
+    e.preventDefault();
+
+    if (
+      !formData.hoTen ||
+      !formData.tenDangNhap ||
+      !formData.email ||
+      !formData.soDienThoai ||
+      !formData.matKhau ||
+      !formData.nhapLaiMatKhau
+    ) {
+      alert("Vui lòng nhập đầy đủ");
       return;
     }
 
-    if (!email.includes("@")) {
-      setError("Email không hợp lệ!");
+    if (
+      formData.matKhau !==
+      formData.nhapLaiMatKhau
+    ) {
+      alert("Mật khẩu không khớp");
       return;
     }
 
-    if (password.length < 6) {
-      setError("Mật khẩu phải >= 6 ký tự!");
-      return;
+    try {
+
+      const response = await fetch(
+        "http://localhost:5000/register",
+        {
+          method: "POST",
+
+          headers: {
+            "Content-Type": "application/json",
+          },
+
+          body: JSON.stringify({
+            ho_ten: formData.hoTen,
+            ten_dang_nhap: formData.tenDangNhap,
+            email: formData.email,
+            so_dien_thoai: formData.soDienThoai,
+            mat_khau: formData.matKhau,
+          }),
+        }
+      );
+
+      const data = await response.json();
+
+      if (response.ok) {
+
+        alert(data.message);
+
+        navigate("/login");
+
+      }
+
+      else {
+
+        alert(data.message);
+
+      }
+
     }
 
-    setError("");
+    catch (error) {
 
-    console.log("Đăng ký thành công:", { username, email, password });
+      console.log(error);
 
+      alert("Lỗi server");
 
-    navigate("/login");
+    }
+
   };
 
   return (
     <div className="register-page">
 
-      <div className="register-card">
+      <div className="register-container">
 
-        <img src={logo2} alt="logo2" className="register-logo" />
+        <h1>ĐĂNG KÝ</h1>
 
-        <h2 className="register-title">Đăng ký tài khoản</h2>
+        <form onSubmit={handleRegister}>
 
-        {error && <p className="error-text">{error}</p>}
+          <input
+            type="text"
+            name="hoTen"
+            placeholder="Họ và tên"
+            value={formData.hoTen}
+            onChange={handleChange}
+          />
 
-        <input
-          className="register-input"
-          placeholder="Tên đăng nhập"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-        />
+          <input
+            type="text"
+            name="tenDangNhap"
+            placeholder="Tên đăng nhập"
+            value={formData.tenDangNhap}
+            onChange={handleChange}
+          />
 
-        <input
-          className="register-input"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
+          <input
+            type="email"
+            name="email"
+            placeholder="Email"
+            value={formData.email}
+            onChange={handleChange}
+          />
 
-        <input
-          className="register-input"
-          type="password"
-          placeholder="Mật khẩu"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <button className="register-btn" onClick={handleRegister}>
-          Đăng ký
-        </button>
+          <input
+            type="text"
+            name="soDienThoai"
+            placeholder="Số điện thoại"
+            value={formData.soDienThoai}
+            onChange={handleChange}
+          />
 
-        <p className="register-text">
-          Already have an account? <Link to="/login">Đăng nhập</Link>
+          <input
+            type="password"
+            name="matKhau"
+            placeholder="Mật khẩu"
+            value={formData.matKhau}
+            onChange={handleChange}
+          />
+
+          <input
+            type="password"
+            name="nhapLaiMatKhau"
+            placeholder="Nhập lại mật khẩu"
+            value={formData.nhapLaiMatKhau}
+            onChange={handleChange}
+          />
+
+          <button type="submit">
+            Đăng ký
+          </button>
+
+        </form>
+
+        <p>
+          Đã có tài khoản ?
+
+          <Link to="/login">
+            Đăng nhập
+          </Link>
+
         </p>
 
       </div>
+
     </div>
   );
 }

@@ -1,64 +1,99 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom"; // 🔥 thêm cái này
-import { Link } from "react-router-dom";
-import logo2 from "../assets/logo2.jpg";
+import { useNavigate, Link } from "react-router-dom";
 import "../App.css";
 
+const API = "http://localhost:5000";
+
 export default function Login() {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState(""); // 🔥 báo lỗi
+  const navigate = useNavigate();
 
-  const navigate = useNavigate(); // 🔥 dùng để chuyển trang
+  const [formData, setFormData] = useState({
+    tenDangNhap: "",
+    matKhau: "",
+  });
 
-  const handleLogin = () => {
-    if (!username || !password) {
-      setError("Vui lòng nhập đầy đủ thông tin!");
-      return;
+  // INPUT CHANGE
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  // LOGIN
+  const handleLogin = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await fetch(`${API}/login`, {
+        method: "POST",
+        mode: "cors",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          ten_dang_nhap: formData.tenDangNhap,
+          mat_khau: formData.matKhau,
+        }),
+      });
+
+      const text = await response.text();
+      let data;
+
+      try {
+        data = JSON.parse(text);
+      } catch {
+        console.error("Server trả về không phải JSON:", text);
+        alert("Server lỗi");
+        return;
+      }
+
+      if (response.ok) {
+        alert(data.message);
+
+        localStorage.setItem("user", JSON.stringify(data.user));
+        localStorage.setItem("role", data.user.vai_tro_id);
+        localStorage.setItem("userId", data.user.id);
+
+        navigate("/");
+      } else {
+        alert(data.message);
+      }
+    } catch (error) {
+      console.error("❌ Login error:", error);
+      alert("Không kết nối được server (backend chưa chạy hoặc sai port)");
     }
-
-    setError("");
-
-    navigate("/"); // 🔥 chuyển về trang chủ
   };
 
   return (
     <div className="login-page">
+      <div className="login-container">
+        <h1>ĐĂNG NHẬP</h1>
 
-      <div className="login-card">
+        <form onSubmit={handleLogin}>
+          <input
+            type="text"
+            name="tenDangNhap"
+            placeholder="Tên đăng nhập"
+            value={formData.tenDangNhap}
+            onChange={handleChange}
+            required
+          />
 
-        <img src={logo2} alt="logo2" className="login-logo" />
+          <input
+            type="password"
+            name="matKhau"
+            placeholder="Mật khẩu"
+            value={formData.matKhau}
+            onChange={handleChange}
+            required
+          />
 
-        <div className="login-alert">
-          Your session has timed out. Please log in again.
-        </div>
+          <button type="submit">Đăng nhập</button>
+        </form>
 
-        {error && <p className="error-text">{error}</p>}
-
-        <input
-          className="login-input"
-          placeholder="Tên đăng nhập"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-        />
-
-        <input
-          className="login-input"
-          type="password"
-          placeholder="Mật khẩu"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-
-        <button className="login-btn" onClick={handleLogin}>
-          Đăng nhập
-        </button>
-
-        <a href="#" className="login-link">
-          Quên mật khẩu?
-        </a>
-        <p className="register-text">
-          Chưa có tài khoản <Link to="/register">Đăng ký ngay</Link>
+        <p>
+          Chưa có tài khoản? <Link to="/register">Đăng ký</Link>
         </p>
       </div>
     </div>

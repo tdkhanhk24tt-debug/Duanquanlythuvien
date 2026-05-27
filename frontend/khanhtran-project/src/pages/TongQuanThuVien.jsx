@@ -1,6 +1,6 @@
 import "../App.css";
 
-export default function tongquanthuvien() {
+export default function TongQuanThuVien() {
   return (
     <div className="about-container">
 
@@ -10,7 +10,7 @@ export default function tongquanthuvien() {
       {/* 2. Nhiệm vụ */}
       <p className="italic">1. Giới thiệu chung</p>
       <p className="text">
-        Thư viện UDCK là hệ thống cung cấp tài nguyên học tập và nghiên cứu dành cho sinh viên, giảng viên và người dùng quan tâm. Thư viện trực thuộc [tên trường/khoa], được xây dựng nhằm hỗ trợ hiệu quả cho quá trình học tập và nghiên cứu. Với nguồn tài liệu phong phú và hệ thống quản lý hiện đại, UDCK giúp người dùng tiếp cận tri thức một cách nhanh chóng và tiện lợi.
+        Thư viện UDCK là hệ thống cung cấp tài nguyên học tập và nghiên cứu dành cho sinh viên, giảng viên và người dùng quan tâm. Thư viện trực thuộc Phân Hiệu Đại học Đà Nẵng tạo Kon Tum, được xây dựng nhằm hỗ trợ hiệu quả cho quá trình học tập và nghiên cứu. Với nguồn tài liệu phong phú và hệ thống quản lý hiện đại, UDCK giúp người dùng tiếp cận tri thức một cách nhanh chóng và tiện lợi.
       </p>
       <p className="italic">2. Tài nguyên hiện có</p>
       <p className="text">

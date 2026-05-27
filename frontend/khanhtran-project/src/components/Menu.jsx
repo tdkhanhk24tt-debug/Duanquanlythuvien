@@ -1,6 +1,7 @@
 import { NavLink } from "react-router-dom";
 import { useState, useEffect } from "react";
 import logo from "../assets/logo.jpg";
+import { isAdmin } from "../utils/auth";
 
 import banner1 from "../assets/banner1.jpg";
 import banner2 from "../assets/banner2.jpg";
@@ -64,7 +65,9 @@ export default function Menu() {
           <div className="nav-item dropdown">
             <span className="nav-link">TRANG CHỦ</span>
             <div className="dropdown-menu">
-              <a href="https://kontum.udn.vn/">UDCK</a>
+              <a href="https://kontum.udn.vn/" target="_blank" rel="noreferrer">
+                UDCK
+              </a>
 
               <NavLink to="/" end className={({ isActive }) => isActive ? "active-link" : ""}>
                 Thư viện
@@ -97,8 +100,12 @@ export default function Menu() {
                 Cơ cấu tổ chức
               </NavLink>
 
-              <NavLink to="/about/" className={({ isActive }) => isActive ? "active-link" : ""}>
+              <NavLink to="/about/thanhvien" className={({ isActive }) => isActive ? "active-link" : ""}>
                 Đội ngũ nhân sự
+              </NavLink>
+
+              <NavLink to="/about/noiquy" className={({ isActive }) => isActive ? "active-link" : ""}>
+                Nội quy thư viện
               </NavLink>
 
             </div>
@@ -118,38 +125,12 @@ export default function Menu() {
               </NavLink>
 
               <NavLink to="/resources/" className={({ isActive }) => isActive ? "active-link" : ""}>
-                Tạp chí - báo
-              </NavLink>
-
-              <NavLink to="/resources/" className={({ isActive }) => isActive ? "active-link" : ""}>
                 Tài liệu số
               </NavLink>
             </div>
           </div>
 
-          {/* DỊCH VỤ */}
-          <div className="nav-item dropdown">
-            <span className="nav-link">DỊCH VỤ</span>
-            <div className="dropdown-menu">
-
-              <NavLink to="/services" className={({ isActive }) => isActive ? "active-link" : ""}>
-                Đặt chỗ - giữ sách
-              </NavLink>
-
-              <NavLink to="/services/" className={({ isActive }) => isActive ? "active-link" : ""}>
-                Thẻ thư viện
-              </NavLink>
-
-              <NavLink to="/services/" className={({ isActive }) => isActive ? "active-link" : ""}>
-                Dịch vụ hỗ trợ nghiên cứu
-              </NavLink>
-
-              <NavLink to="/services/HuongDanPhongDoc" className={({ isActive }) => isActive ? "active-link" : ""}>
-                Phòng học nhóm - phòng đọc
-              </NavLink>
-
-            </div>
-          </div>
+          
 
           {/* HƯỚNG DẪN */}
           <div className="nav-item dropdown">
@@ -157,19 +138,64 @@ export default function Menu() {
             <div className="dropdown-menu">
 
               <NavLink to="/guide/" className={({ isActive }) => isActive ? "active-link" : ""}>
-                Cách đăng ký tài khoản
+                Hướng dẫn đăng nhập tài khoản
               </NavLink>
 
               <NavLink to="/guide/" className={({ isActive }) => isActive ? "active-link" : ""}>
-                Cách tìm kiếm tài liệu
+                Hướng dẫn tìm kiếm tài liệu
               </NavLink>
 
-              <NavLink to="/guide/NoiQuy" className={({ isActive }) => isActive ? "active-link" : ""}>
-                Nội quy thư viện
+              <NavLink to="/services/HuongDanSuDungThuVien" className={({ isActive }) => isActive ? "active-link" : ""}>
+                Hướng dẫn sử dụng thư viện 
+              </NavLink>
+
+              <NavLink to="/services/HuongDanPhongDoc" className={({ isActive }) => isActive ? "active-link" : ""}>
+                Hướng dẫn sử dụng phòng học nhóm - phòng đọc
               </NavLink>
 
             </div>
           </div>
+          {/* QUẢN LÝ */}
+          {isAdmin() && (
+            <div className="nav-item dropdown">
+
+              <span className="nav-link">
+                QUẢN LÝ
+              </span>
+
+              <div className="dropdown-menu">
+
+                <NavLink
+                  to="/thanhvien"
+                  className={({ isActive }) =>
+                    isActive ? "active-link" : ""
+                  }
+                >
+                  Quản lý nhân viên
+                </NavLink>
+
+                <NavLink
+                  to="/them-sach"
+                  className={({ isActive }) =>
+                    isActive ? "active-link" : ""
+                  }
+                >
+                  Thêm sách
+                </NavLink>
+
+                <NavLink
+                  to="/xoa-sach"
+                  className={({ isActive }) =>
+                    isActive ? "active-link" : ""
+                  }
+                >
+                  Xóa sách
+                </NavLink>
+
+              </div>
+
+            </div>
+          )}
 
           {/* LIÊN HỆ */}
           <div className="nav-item dropdown">
@@ -183,11 +209,6 @@ export default function Menu() {
               <NavLink to="/contact/" className={({ isActive }) => isActive ? "active-link" : ""}>
                 Gửi phản hồi - góp ý
               </NavLink>
-
-              <NavLink to="/contact/" className={({ isActive }) => isActive ? "active-link" : ""}>
-                Hỗ trợ trực tuyến
-              </NavLink>
-
             </div>
           </div>
 

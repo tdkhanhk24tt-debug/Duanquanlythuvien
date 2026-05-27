@@ -1,6 +1,5 @@
-import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
-import Menu from "./components/Menu";
-import Footer from "./components/footer";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import MainLayout from "./layouts/MainLayout";
 import Home from "./pages/home";
 import Login from "./pages/login";
 import Register from "./pages/dangky";
@@ -9,48 +8,63 @@ import ChucNangNhiemVu from "./pages/ChucNangNhiemVu";
 import NoiQuy from "./pages/NoiQuy";
 import SuMenhTamNhin from "./pages/SuMenhTamNhin";
 import TongQuanThuVien from "./pages/TongQuanThuVien";
-import SachGiay from "./pages/TaiLieugiay";
-import SoDoToChuc from "./pages/CoCauToChuc"; 
+import SoDoToChuc from "./pages/CoCauToChuc";
+import ThanhVien from "./pages/thanhvien";
+import SachGiay from "./pages/TaiLieugiay"; 
 import HuongDanPhongDoc from "./pages/HuongDanPhongDoc";
+import HuongDanSuDungThuVien from "./pages/huongdansudungthuvien";
 import TaiLieuDienTu from "./pages/TaiLieuDienTu";
-function Layout() {
-  const location = useLocation();
+import NhapSach from"./pages/nhapsach";
+import XuatSach from"./pages/xuatsach";
+import ThongKeSach from"./pages/thongkesach";
+import ResourceListPage from "./pages/ResourceListPage";
+import AdminRoute from "./routes/AdminRoute";
+import PrivateRoute from "./routes/PrivateRoute";
+import ThemSach from "./pages/ThemSach";
+import XoaSach from "./pages/XoaSach";
 
-  const hideLayout =
-    location.pathname === "/login" ||
-    location.pathname === "/register";
-
-  return (
-    <>
-      {!hideLayout && <Menu />}
-
-      <Routes>
-        <Route path="/" element={<Home />} />
-
-        {/* GIỚI THIỆU */}
-        <Route path="/about/lichsu" element={<LichSu />} />
-        <Route path="/about/chucnangnhiemvu" element={<ChucNangNhiemVu />} />
-        <Route path="/about/noiquy" element={<NoiQuy />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/guide/NoiQuy" element={<NoiQuy />} />
-        <Route path="/about/sumenhtamnhin" element={<SuMenhTamNhin />} />
-        <Route path="/about/tongquanthuvien" element={<TongQuanThuVien />} />
-        <Route path="/resources/tai-lieu-giay" element={<SachGiay />} />
-        <Route path="/about/sodotochuc" element={<SoDoToChuc />} />
-        <Route path="/services/HuongDanPhongDoc" element={<HuongDanPhongDoc />} />
-        <Route path="/resources/tai-lieu-dien-tu" element={<TaiLieuDienTu />} />
-      </Routes>
-
-      {!hideLayout && <Footer />}
-    </>
-  );
-}
+const router = createBrowserRouter(
+  [
+    {
+      path: "/",
+      element: <MainLayout />,
+      children: [
+        { index: true, element: <Home /> },
+        { path: "/login", element: <Login /> },
+        { path: "/register", element: <Register /> },
+        
+        // ABOUT
+        { path: "/about/tongquanthuvien", element: <TongQuanThuVien /> },
+        { path: "/about/lichsu", element: <LichSu /> },
+        { path: "/about/sumenhtamnhin", element: <SuMenhTamNhin /> },
+        { path: "/about/chucnangnhiemvu", element: <ChucNangNhiemVu /> },
+        { path: "/about/sodotochuc", element: <SoDoToChuc /> },
+        { path: "/about/thanhvien", element: <ThanhVien /> },
+        { path: "/about/noiquy", element: <NoiQuy /> },
+        
+        // RESOURCES / SERVICES
+        { path: "/resources/tai-lieu-giay", element: <SachGiay /> },
+        { path: "/resources/:slug", element: <ResourceListPage /> },
+        { path: "/services/huongdanphongdoc", element: <HuongDanPhongDoc /> },
+        { path: "/services/huongdansudungthuvien", element: <HuongDanSuDungThuVien /> },
+        { path: "/resources/tai-lieu-dien-tu", element: <TaiLieuDienTu /> },
+        { path: "/services/nhap-sach", element: <NhapSach /> },
+        { path: "/services/xuat-sach", element: <XuatSach /> },
+        { path: "/services/thong-ke-sach", element: <ThongKeSach /> },
+        { path: "/thanhvien", element: <AdminRoute><ThanhVien /></AdminRoute> },
+        { path: "/them-sach", element: <PrivateRoute><ThemSach /></PrivateRoute> },
+        { path: "/xoa-sach", element: <PrivateRoute><XoaSach /></PrivateRoute> },
+      ],
+    },
+  ],
+  {
+    future: {
+      v7_startTransition: true,
+      v7_relativeSplatPath: true,
+    },
+  }
+);
 
 export default function App() {
-  return (
-    <Router>
-      <Layout />
-    </Router>
-  );
+  return <RouterProvider router={router} />;
 }

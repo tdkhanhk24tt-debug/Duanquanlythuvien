@@ -22,6 +22,7 @@ import AdminRoute from "./routes/AdminRoute";
 import PrivateRoute from "./routes/PrivateRoute";
 import ThemSach from "./pages/ThemSach";
 import XoaSach from "./pages/XoaSach";
+import SuaSach from "./pages/SuaSach"
 
 const router = createBrowserRouter(
   [
@@ -54,6 +55,7 @@ const router = createBrowserRouter(
         { path: "/thanhvien", element: <AdminRoute><ThanhVien /></AdminRoute> },
         { path: "/them-sach", element: <PrivateRoute><ThemSach /></PrivateRoute> },
         { path: "/xoa-sach", element: <PrivateRoute><XoaSach /></PrivateRoute> },
+        { path: "/sua-sach", element: <PrivateRoute><SuaSach /></PrivateRoute> },
       ],
     },
   ],

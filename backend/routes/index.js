@@ -171,13 +171,13 @@ module.exports = (db) => {
   });
 
   // ================= API LOAITAILIEU =================
-  router.get("/api/loaitailieu", (req, res) => {
+  router.get("/api/loai_tai_lieu", (req, res) => {
 
     const sql = `
     
       SELECT *
       
-      FROM tb_loaitailieu
+      FROM loai_tai_lieu
     
     `;
 

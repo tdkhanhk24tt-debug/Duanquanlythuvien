@@ -80,13 +80,11 @@ export default function ResourceListPage() {
           className={`view-btn ${view === "grid" ? "active" : ""}`}
           onClick={() => setView("grid")}
         >
-          Grid
         </button>
         <button
           className={`view-btn ${view === "list" ? "active" : ""}`}
           onClick={() => setView("list")}
         >
-          List
         </button>
       </div>
 

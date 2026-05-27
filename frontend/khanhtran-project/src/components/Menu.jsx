@@ -1,7 +1,7 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import logo from "../assets/logo.jpg";
-import { isAdmin } from "../utils/auth";
+import { isAdmin, isLoggedIn, logout } from "../utils/auth";
 
 import banner1 from "../assets/banner1.jpg";
 import banner2 from "../assets/banner2.jpg";
@@ -11,9 +11,16 @@ import banner4 from "../assets/banner4.jpg";
 import "../App.css";
 
 export default function Menu() {
+  const navigate = useNavigate();
   const banners = [banner1, banner2, banner3, banner4];
   const [current, setCurrent] = useState(0);
   const [search, setSearch] = useState("");
+  const loggedIn = isLoggedIn();
+
+  const handleLogout = () => {
+    logout();
+    navigate("/");
+  };
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -51,8 +58,16 @@ export default function Menu() {
             />
           </div>
 
-          <NavLink to="/login" className="login-btn">Đăng nhập</NavLink>
-          <NavLink to="/register" className="register-btn">Đăng ký</NavLink>
+          {loggedIn ? (
+            <button className="logout-btn" onClick={handleLogout}>
+              Đăng xuất
+            </button>
+          ) : (
+            <>
+              <NavLink to="/login" className="login-btn">Đăng nhập</NavLink>
+              <NavLink to="/register" className="register-btn">Đăng ký</NavLink>
+            </>
+          )}
 
         </div>
       </div>
@@ -192,11 +207,20 @@ export default function Menu() {
                   Xóa sách
                 </NavLink>
 
+                <NavLink
+                  to="/sua-sach"
+                  className={({ isActive }) =>
+                    isActive ? "active-link" : ""
+                  }
+                >
+                  Sửa sách
+                </NavLink>
+
               </div>
 
             </div>
           )}
-
+          
           {/* LIÊN HỆ */}
           <div className="nav-item dropdown">
             <span className="nav-link">LIÊN HỆ</span>

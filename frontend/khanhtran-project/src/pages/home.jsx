@@ -69,7 +69,7 @@ export default function Dashboard() {
     },
     {
       title:
-        "Chuỗi sự kiện chào mừng ngày sách và văn hóa đọc Việt Nam lần thứ 5 năm 2026",
+        "Chuỗi sự kiện chào mừng ngày sách và văn hóa đọc Việt Nam ",
       date: "19/04/2026",
       img: news2,
     },

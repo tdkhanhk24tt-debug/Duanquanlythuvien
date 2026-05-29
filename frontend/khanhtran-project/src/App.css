@@ -1898,6 +1898,88 @@ TÀI LIỆU ĐIỆN TỬ VÀ TÀI LIỆU GIẤY
 .tailieu-content {
   flex: 1;
 }
+/*====================NÚT PHÂN TRANG ====================*/
+.pagination{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:10px;
+  margin-top:30px;
+}
 
+.pagination button{
+  padding:8px 14px;
+  border:none;
+  background:#1e3a8a;
+  color:white;
+  border-radius:5px;
+  cursor:pointer;
+}
+
+.pagination span{
+  padding:8px 14px;
+  cursor:pointer;
+  border-radius:5px;
+  background:#eee;
+}
+
+.active-page{
+  background:#1e3a8a !important;
+  color:white;
+}
+
+/*==================TỔNG QUAN THƯ VIỆN =================*/
+.about-container1 {
+  width: 100%;
+  margin: 40px auto;
+  background: #ffffff;
+  font-family: "Times New Roman", serif;
+  line-height: 1.7;
+  margin-top: -30px;
+}
+
+/* TITLE */
+.about-title1 {
+  text-align: center;
+  font-size: 26px;
+  font-weight: bold;
+  color: #1e3a8a;
+  margin-bottom: 25px;
+  text-transform: uppercase;
+}
+
+/* SECTION TITLE */
+.section-title1 {
+  font-size: 26px;
+  font-weight: bold;
+  color: #0f172a;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  padding-left: 10px;
+}
+
+/* TEXT */
+.text1 {
+  margin-left: 10px;
+  margin-bottom: 12px;
+  text-align: left;
+  color: #334155;
+  font-size: 18px;
+}
+
+/* ITALIC (tiêu đề nhỏ) */
+.italic1 {
+  font-style: italic;
+  font-weight: 600;
+  margin-top: 12px;
+  margin-bottom: 6px;
+  color: #1e40af;
+  margin-left: 10px;
+  text-align: left;
+  font-size: 23px;
+}
+
+/* menu*/
+/* =============================*/
 
 

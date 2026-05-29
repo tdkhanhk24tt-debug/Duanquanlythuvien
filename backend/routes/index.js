@@ -202,3 +202,31 @@ module.exports = (db) => {
   return router;
 
 };
+
+router.get("/nganh/:slug", async (req, res) => {
+
+  const { slug } = req.params;
+
+  try {
+
+    const [rows] = await db.query(`
+      SELECT tl.*
+      FROM tai_lieu tl
+      JOIN nganh_hoc nh
+      ON tl.nganh_hoc_id = nh.id
+      WHERE nh.slug = ?
+    `, [slug]);
+
+    res.json(rows);
+
+  } catch (err) {
+
+    console.log(err);
+
+    res.status(500).json({
+      message: "Lỗi server"
+    });
+
+  }
+
+});
